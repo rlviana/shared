@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+   <!-- Set maximum rank level to 15 -->
+   <Match>
+      <Rank value="16"/>
+   </Match>
+   
+   <!-- Excludes EXPERIMENTAL Category -->
+   <Match>
+   <Bug category="EXPERIMENTAL"/>   
+   </Match>
+   
+  <!-- Exclude JPA Generated Classes -->
+  <Match>
+    <Class name="~.*_"/>
+  </Match>
+</FindBugsFilter>
