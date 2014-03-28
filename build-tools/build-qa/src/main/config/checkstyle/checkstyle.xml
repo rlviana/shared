@@ -231,4 +231,8 @@
          <property name="checkFormat" value="FinalParameters"/>
          <property name="influenceFormat" value="2"/>
       </module>
+      <!-- Suppression filter -->
+      <module name="SuppressionFilter">
+         <property name="file" value="./suppression-files.xml"/>
+      </module>
 </module>
