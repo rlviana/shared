@@ -189,7 +189,7 @@
                   <source>${java.source.version}</source>
                   <target>${java.target.version}</target>
                   <!-- Avoid starting APT -->
-                  <compilerArgument>-proc:none</compilerArgument>
+                  <!--  compilerArgument>-proc:none</compilerArgument -->
                </configuration>
             </plugin>
             <!-- Remove files generated at build-time in a project's directory -->
