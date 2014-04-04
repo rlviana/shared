@@ -146,6 +146,6 @@
     <property name="influenceFormat" value="2"/>
   </module>
   <module name="SuppressionFilter">
-    <property name="file" value="./suppression-files.xml"/>
-  </module>
+      <property name="file" value="${suppressions.file}"/>
+   </module>
 </module>

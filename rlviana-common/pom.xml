@@ -147,6 +147,7 @@
       <!-- Qa plugins configuration -->
       <!-- Overwrite for project -->
       <maven-checkstyle-plugin.configLocation></maven-checkstyle-plugin.configLocation>
+      <maven-checkstyle-exclude-plugin.configLocation></maven-checkstyle-exclude-plugin.configLocation>
       <maven-pmd-plugin.configLocation></maven-pmd-plugin.configLocation>
       <maven.findbugs-include-plugin.configLocation></maven.findbugs-include-plugin.configLocation>
       <maven.findbugs-exclude-plugin.configLocation></maven.findbugs-exclude-plugin.configLocation>
@@ -377,6 +378,7 @@
                <inherited>true</inherited>
                <configuration>
                   <skip>${skip.checkstyle}</skip>
+                  <propertyExpansion>suppressions.file=${maven-checkstyle-exclude-plugin.configLocation}</propertyExpansion>
                   <configLocation>${maven-checkstyle-plugin.configLocation}</configLocation>
                   <failsOnError>true</failsOnError>
                   <enableRulesSummary>true</enableRulesSummary>
@@ -680,6 +682,9 @@
                   </reports>
                </reportSet>
             </reportSets>
+            <configuration>
+               <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+            </configuration>
          </plugin>
          <!-- Cross reference plugin for reports -->
          <plugin>
@@ -757,6 +762,7 @@
             <artifactId>maven-checkstyle-plugin</artifactId>
             <version>${plugin.checkstyle.version}</version>
             <configuration>
+               <propertyExpansion>suppressions.file=${maven-checkstyle-exclude-plugin.configLocation}</propertyExpansion>
                <configLocation>${maven-checkstyle-plugin.configLocation}</configLocation>
                <failsOnError>false</failsOnError>
                <enableRulesSummary>true</enableRulesSummary>
