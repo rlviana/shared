@@ -101,6 +101,7 @@
       <plugin.jacoco.version>0.7.0.201403182114</plugin.jacoco.version>
       <plugin.jar.version>2.4</plugin.jar.version>
       <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+      <plugin.jetty.version>9.1.4.v20140401</plugin.jetty.version>
       <plugin.jrebel.version>1.1.3</plugin.jrebel.version>
       <plugin.jxr.version>2.3</plugin.jxr.version>
       <plugin.pmd.version>3.0.1</plugin.pmd.version>
@@ -144,6 +145,10 @@
       <skip.versions>true</skip.versions>
       <!-- Skip report -->
       <skip.changes-report>true</skip.changes-report>
+      <!-- Skip jetty -->
+      <skip.jetty>true</skip.jetty>
+      <!-- Skip jetty -->
+      <skip.jacoco>true</skip.jacoco>
       <!-- Qa plugins configuration -->
       <!-- Overwrite for project -->
       <maven-checkstyle-plugin.configLocation></maven-checkstyle-plugin.configLocation>
@@ -190,7 +195,7 @@
                   <source>${java.source.version}</source>
                   <target>${java.target.version}</target>
                   <!-- Avoid starting APT -->
-                  <!--  compilerArgument>-proc:none</compilerArgument -->
+                  <!-- compilerArgument>-proc:none</compilerArgument -->
                </configuration>
             </plugin>
             <!-- Remove files generated at build-time in a project's directory -->
@@ -370,6 +375,41 @@
                <artifactId>maven-enforcer-plugin</artifactId>
                <version>${plugin.enforcer.version}</version>
             </plugin>
+            <!-- Jetty plugin -->
+            <plugin>
+               <groupId>org.eclipse.jetty</groupId>
+               <artifactId>jetty-maven-plugin</artifactId>
+               <version>${plugin.jetty.version}</version>
+               <configuration>
+                  <stopPort>9999</stopPort>
+                  <stopKey>stop</stopKey>
+                  <detail>true</detail>
+                  <dumpOnStart>true</dumpOnStart>
+                  <scanIntervalSeconds>10</scanIntervalSeconds>
+                  <skip>${skip.jetty}</skip>
+               </configuration>
+               <executions>
+                  <execution>
+                     <!-- Runs Jetty in the pre-integration-test maven phase -->
+                     <id>start-jetty</id>
+                     <phase>pre-integration-test</phase>
+                     <goals>
+                        <goal>run</goal>
+                     </goals>
+                     <configuration>
+                        <daemon>true</daemon>
+                     </configuration>
+                  </execution>
+                  <execution>
+                     <!-- Stops Jetty in the post-integration-test maven phase -->
+                     <id>stop-jetty</id>
+                     <phase>post-integration-test</phase>
+                     <goals>
+                        <goal>stop</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
             <!-- QA -->
             <plugin>
                <groupId>org.apache.maven.plugins</groupId>
@@ -499,6 +539,9 @@
                      </configuration>
                   </execution>
                </executions>
+               <configuration>
+               <skip>${skip.jacoco}</skip>
+               </configuration>
             </plugin>
             <!-- Checks existence of common tags in code -->
             <plugin>
